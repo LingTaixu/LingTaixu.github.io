@@ -1,27 +1,15 @@
-"use client";
-import { useState, useEffect } from 'react';
-import { BrowserProvider, ethers } from 'ethers';
+'use client';
+import Connect from '@/components/connect';
 
-const MyComponent =  () => {
-  const [provider, setProvider] = useState<BrowserProvider | null>(null)
-  const [address, setAddress] = useState<string>('')
-
-  useEffect(() => {
-    async function fetchBlock() {
-      if (typeof window.ethereum !== 'undefined') {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        setProvider(provider)
-        setAddress((await provider.getSigner()).address)
-      }
-    }
-    fetchBlock()
-  }, []);
+const viewAddress = () => {
+  const { address, provider } = Connect();
+  console.log(provider);
 
   return (
     <div>
       <p> {address} </p>
     </div>
   );
-}
+};
 
-export default MyComponent;
+export default viewAddress;
