@@ -2,8 +2,7 @@
 import Connect from '@/components/connect';
 
 const viewAddress = () => {
-  const { address, provider } = Connect();
-  console.log(provider);
+  const { address } = Connect();
 
   return (
     <div>
