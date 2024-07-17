@@ -15,9 +15,9 @@ const Connect = () => {
       }
     }
     fetchBlock();
-  }, []);
+  }, [setProvider, setAddress]);
 
-  return {address, provider}
+  return { address, provider };
 };
 
 export default Connect;
