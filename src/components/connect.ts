@@ -16,7 +16,7 @@ const Connect = () => {
         setProvider(provider);
         const userAddress = (await provider.getSigner()).address;
         setAddress(userAddress);
-        dispatch(addAddress(userAddress)); // 示例地址
+        dispatch(addAddress(userAddress)); // redux 添加地址
       }
     }
     fetchBlock();

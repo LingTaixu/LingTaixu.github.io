@@ -3,3 +3,8 @@
 
 #### start
 - yarn or pnpm i 
+
+#### balance
+- 使用redux存储用户地址
+- 用hook查询余额
+- loading余额显示

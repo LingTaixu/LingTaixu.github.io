@@ -16,7 +16,7 @@ const userAddressSlice = createSlice({
     addAddress: (state, action: PayloadAction<string>) => {
       state.address = action.payload;
     },
-    // 删除用户地址（重置为空字符串）
+    // 清空用户地址
     removeAddress: (state) => {
       state.address = '';
     },

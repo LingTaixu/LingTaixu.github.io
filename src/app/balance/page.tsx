@@ -1,11 +1,11 @@
 'use client'; // 确保这是一个客户端组件
 
-import UserAddress from '@/components/AddressComponent';
+import UserBalance from '@/components/BNBBalance';
 
 const Home = () => {
   return (
     <div>
-      <UserAddress />
+      <UserBalance />
     </div>
   );
 };
