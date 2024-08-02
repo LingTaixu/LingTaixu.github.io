@@ -6,7 +6,7 @@ export default function Home() {
 
   const handleClick = () => {
     // 使用路由对象进行页面跳转
-    router.push('/dashboard');
+    router.push('/address');
   };
 
   return (

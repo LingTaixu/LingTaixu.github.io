@@ -1,8 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { BrowserProvider, ethers } from 'ethers';
-
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/store';
+import { addAddress } from '@/store/slices/userAddressSlice';
 const Connect = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [provider, setProvider] = useState<BrowserProvider | null>(null);
   const [address, setAddress] = useState<string>('');
 
@@ -11,11 +14,13 @@ const Connect = () => {
       if (typeof window.ethereum !== 'undefined') {
         const provider = new ethers.BrowserProvider(window.ethereum);
         setProvider(provider);
-        setAddress((await provider.getSigner()).address);
+        const userAddress = (await provider.getSigner()).address;
+        setAddress(userAddress);
+        dispatch(addAddress(userAddress)); // 示例地址
       }
     }
     fetchBlock();
-  }, [setProvider, setAddress]);
+  }, [setProvider, setAddress, dispatch]);
 
   return { address, provider };
 };
