@@ -1,52 +1,35 @@
-name: ci
+name: Deploy Nuxt.js
 
 on:
   push:
     branches:
-      - main
-      - master
+      - main # 仅在 main 分支上触发部署
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [lts/*]
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@master
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Setup node env 🏗
-        uses: actions/setup-node@v3.0.0
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
-          check-latest: true
+          node-version: '18' # 选择适合你的项目的 Node.js 版本
 
-      - name: Get yarn cache directory path 🛠
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Install dependencies
+        run: npm install
 
-      - name: Cache node_modules 📦
-        uses: actions/cache@v2.1.7
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      - name: Build Nuxt.js project
+        run: npm run build
 
-      - name: Install dependencies 👨🏻‍💻
-        run: yarn
-
-      - name: Run linter 👀
-        run: yarn lint
-
-      - name: Run tests 🧪
-        run: yarn test
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npm install -g vercel
+          vercel --prod --token $VERCEL_TOKEN
